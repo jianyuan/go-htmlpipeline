@@ -2,10 +2,82 @@
 
 
 [[projects]]
+  name = "github.com/PuerkitoBio/goquery"
+  packages = ["."]
+  revision = "a86ea073017a6beddef78c8659e7224e8ca634b0"
+  version = "v1.4.0"
+
+[[projects]]
+  name = "github.com/alecthomas/chroma"
+  packages = [
+    ".",
+    "formatters/html",
+    "lexers",
+    "lexers/a",
+    "lexers/b",
+    "lexers/c",
+    "lexers/d",
+    "lexers/e",
+    "lexers/f",
+    "lexers/g",
+    "lexers/h",
+    "lexers/i",
+    "lexers/internal",
+    "lexers/j",
+    "lexers/k",
+    "lexers/l",
+    "lexers/m",
+    "lexers/n",
+    "lexers/o",
+    "lexers/p",
+    "lexers/q",
+    "lexers/r",
+    "lexers/s",
+    "lexers/t",
+    "lexers/v",
+    "lexers/w",
+    "lexers/x",
+    "lexers/y",
+    "styles"
+  ]
+  revision = "3020e2ea8c6b1a9c2336022d847c4392c3997f02"
+  version = "v0.4.0"
+
+[[projects]]
+  name = "github.com/andybalholm/cascadia"
+  packages = ["."]
+  revision = "901648c87902174f774fac311d7f176f8647bdaa"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/danwakefield/fnmatch"
+  packages = ["."]
+  revision = "cbb64ac3d964b81592e64f957ad53df015803288"
+
+[[projects]]
+  name = "github.com/dlclark/regexp2"
+  packages = [
+    ".",
+    "syntax"
+  ]
+  revision = "487489b64fb796de2e55f4e8a4ad1e145f80e957"
+  version = "v1.1.6"
+
+[[projects]]
   branch = "master"
   name = "github.com/shurcooL/sanitized_anchor_name"
   packages = ["."]
   revision = "86672fcb3f950f35f2e675df2240550f2a50762f"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = [
+    "html",
+    "html/atom"
+  ]
+  revision = "5f9ae10d9af5b1c89ae6904293b14b064d4ada23"
 
 [[projects]]
   name = "gopkg.in/russross/blackfriday.v2"
@@ -16,6 +88,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "53d55b43a471e52fe1713412b202df90ab9cf2b42bd0ae4cc2e8abe85e014755"
+  inputs-digest = "c44d72c08490b3f2c9ef2894d0160b1890a977ca0675c447f554ea85b8b5e390"
   solver-name = "gps-cdcl"
   solver-version = 1

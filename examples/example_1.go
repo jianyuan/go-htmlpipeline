@@ -2,24 +2,32 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 
 	"github.com/jianyuan/htmlpipeline"
 	"github.com/jianyuan/htmlpipeline/filter"
 )
 
+const TestInput = `
+# H1
+
+` + "```" + `python
+def main():
+	print('Hello world!')
+
+` + "```" + `
+`
+
 func main() {
 	pipeline := htmlpipeline.New(
 		filter.NewMarkdownFilter(),
+		filter.NewSyntaxHighlightFilter(),
 	)
-	input := `
-	# H1
 
-	` + "```" + `python
-	def main():
-		print('Hello world!')
-
-	` + "```" + `
-`
-	output := string(pipeline.Render([]byte(input)))
-	fmt.Println(output)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		output := string(pipeline.Render([]byte(TestInput)))
+		fmt.Fprintf(w, output)
+	})
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

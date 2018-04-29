@@ -23,7 +23,8 @@ func (ctx *Context) HTML() string {
 	}
 
 	if ctx.doc != nil {
-		html, err := ctx.doc.Html()
+		body := ctx.doc.Find("body") // TODO: set fragment context
+		html, err := body.Html()
 		if err == nil {
 			ctx.html = &html
 			return html
@@ -40,7 +41,7 @@ func (ctx *Context) Document() *goquery.Document {
 	}
 
 	if ctx.html != nil {
-		doc, err := goquery.NewDocumentFromReader(strings.NewReader(*ctx.html))
+		doc, err := goquery.NewDocumentFromReader(strings.NewReader(*ctx.html)) // TODO: set fragment context
 		if err == nil {
 			ctx.doc = doc
 			return doc

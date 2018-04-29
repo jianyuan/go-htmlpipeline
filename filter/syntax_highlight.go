@@ -10,23 +10,20 @@ import (
 	"github.com/alecthomas/chroma/formatters/html"
 	"github.com/alecthomas/chroma/lexers"
 	"github.com/alecthomas/chroma/styles"
+	"github.com/jianyuan/htmlpipeline"
 )
 
 type SyntaxHighlightFilter struct {
 }
 
-var _ Filter = (*SyntaxHighlightFilter)(nil)
+var _ htmlpipeline.Filter = (*SyntaxHighlightFilter)(nil)
 
-func NewSyntaxHighlightFilter() Filter {
+func NewSyntaxHighlightFilter() htmlpipeline.Filter {
 	return &SyntaxHighlightFilter{}
 }
 
-func (sh *SyntaxHighlightFilter) Render(input []byte) []byte {
-	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(input))
-	if err != nil {
-		return input
-	}
-
+func (sh *SyntaxHighlightFilter) Render(ctx *htmlpipeline.Context) {
+	doc := ctx.Document()
 	doc.Find("pre").Each(func(i int, s *goquery.Selection) {
 		// TODO: make this customizable
 
@@ -76,11 +73,5 @@ func (sh *SyntaxHighlightFilter) Render(input []byte) []byte {
 
 		s.ReplaceWithHtml(w.String())
 	})
-
-	output, err := doc.Find("body").Html()
-	if err != nil {
-		return input
-	}
-
-	return []byte(output)
+	ctx.WriteDocument(doc)
 }

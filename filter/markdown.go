@@ -1,19 +1,24 @@
 package filter
 
-import blackfriday "gopkg.in/russross/blackfriday.v2"
+import (
+	"github.com/jianyuan/htmlpipeline"
+	blackfriday "gopkg.in/russross/blackfriday.v2"
+)
 
 type MarkdownFilter struct {
 	options []blackfriday.Option
 }
 
-var _ Filter = (*MarkdownFilter)(nil)
+var _ htmlpipeline.Filter = (*MarkdownFilter)(nil)
 
-func NewMarkdownFilter(options ...blackfriday.Option) Filter {
+func NewMarkdownFilter(options ...blackfriday.Option) htmlpipeline.Filter {
 	return &MarkdownFilter{
 		options: append([]blackfriday.Option{}, options...),
 	}
 }
 
-func (md *MarkdownFilter) Render(input []byte) []byte {
-	return blackfriday.Run(input, md.options...)
+func (md *MarkdownFilter) Render(ctx *htmlpipeline.Context) {
+	input := []byte(ctx.HTML())
+	output := blackfriday.Run(input, md.options...)
+	ctx.WriteHTML(string(output))
 }

@@ -1,21 +1,19 @@
 package htmlpipeline
 
-import "github.com/jianyuan/htmlpipeline/filter"
-
 type Pipeline struct {
-	filters []filter.Filter
+	filters []Filter
 }
 
-func New(filters ...filter.Filter) *Pipeline {
+func New(filters ...Filter) *Pipeline {
 	return &Pipeline{
-		filters: append(([]filter.Filter)(nil), filters...),
+		filters: append(([]Filter)(nil), filters...),
 	}
 }
 
-func (p *Pipeline) Render(input []byte) []byte {
-	output := input
+func (p *Pipeline) Render(input string) string {
+	ctx := NewContext(input)
 	for _, filter := range p.filters {
-		output = filter.Render(output)
+		filter.Render(ctx)
 	}
-	return output
+	return ctx.HTML()
 }

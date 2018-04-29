@@ -26,7 +26,7 @@ func main() {
 	)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		output := string(pipeline.Render([]byte(TestInput)))
+		output := pipeline.Render(TestInput)
 		fmt.Fprintf(w, output)
 	})
 	log.Fatal(http.ListenAndServe(":8080", nil))

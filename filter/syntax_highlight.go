@@ -16,8 +16,6 @@ import (
 type SyntaxHighlightFilter struct {
 }
 
-var _ htmlpipeline.Filter = (*SyntaxHighlightFilter)(nil)
-
 func NewSyntaxHighlightFilter() htmlpipeline.Filter {
 	return &SyntaxHighlightFilter{}
 }

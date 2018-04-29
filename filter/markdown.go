@@ -9,8 +9,6 @@ type MarkdownFilter struct {
 	options []blackfriday.Option
 }
 
-var _ htmlpipeline.Filter = (*MarkdownFilter)(nil)
-
 func NewMarkdownFilter(options ...blackfriday.Option) htmlpipeline.Filter {
 	return &MarkdownFilter{
 		options: append([]blackfriday.Option{}, options...),

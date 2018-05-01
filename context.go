@@ -4,6 +4,8 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 )
 
 type Context struct {
@@ -23,8 +25,7 @@ func (ctx *Context) HTML() string {
 	}
 
 	if ctx.doc != nil {
-		body := ctx.doc.Find("body") // TODO: set fragment context
-		html, err := body.Html()
+		html, err := ctx.doc.Html()
 		if err == nil {
 			ctx.html = &html
 			return html
@@ -41,11 +42,24 @@ func (ctx *Context) Document() *goquery.Document {
 	}
 
 	if ctx.html != nil {
-		doc, err := goquery.NewDocumentFromReader(strings.NewReader(*ctx.html)) // TODO: set fragment context
-		if err == nil {
-			ctx.doc = doc
-			return doc
+		bodyNode := &html.Node{
+			Type:     html.ElementNode,
+			Data:     "body",
+			DataAtom: atom.Body,
 		}
+
+		nodes, err := html.ParseFragment(strings.NewReader(*ctx.html), bodyNode)
+		if err != nil {
+			return nil
+		}
+
+		for _, node := range nodes {
+			bodyNode.AppendChild(node)
+		}
+
+		doc := goquery.NewDocumentFromNode(bodyNode)
+		ctx.doc = doc
+		return doc
 	}
 
 	// TODO: panic?

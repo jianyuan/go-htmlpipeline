@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jianyuan/htmlpipeline"
-	"github.com/jianyuan/htmlpipeline/filter"
+	"github.com/jianyuan/go-htmlpipeline"
+	"github.com/jianyuan/go-htmlpipeline/filter"
 )
 
 const TestInput = `

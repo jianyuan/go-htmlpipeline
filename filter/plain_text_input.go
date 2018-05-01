@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"html/template"
 
-	"github.com/jianyuan/htmlpipeline"
+	"github.com/jianyuan/go-htmlpipeline"
 )
 
 type PlainTextInputFilter struct {

@@ -1,7 +1,7 @@
 package filter
 
 import (
-	"github.com/jianyuan/htmlpipeline"
+	"github.com/jianyuan/go-htmlpipeline"
 	blackfriday "gopkg.in/russross/blackfriday.v2"
 )
 

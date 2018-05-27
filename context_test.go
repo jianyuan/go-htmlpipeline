@@ -14,6 +14,6 @@ func TestEmptyContext(t *testing.T) {
 	assert.NoError(t, err)
 
 	doc, err := ctx.Document()
-	assert.Nil(t, doc) // TODO: Use empty document
+	assert.NotNil(t, doc)
 	assert.NoError(t, err)
 }

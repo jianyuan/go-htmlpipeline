@@ -13,6 +13,8 @@ import (
 	"github.com/jianyuan/go-htmlpipeline"
 )
 
+var _ (htmlpipeline.Filter) = (*SyntaxHighlightFilter)(nil)
+
 type SyntaxHighlightFilter struct {
 }
 
@@ -20,8 +22,12 @@ func NewSyntaxHighlightFilter() htmlpipeline.Filter {
 	return &SyntaxHighlightFilter{}
 }
 
-func (sh *SyntaxHighlightFilter) Render(ctx *htmlpipeline.Context) {
-	doc := ctx.Document()
+func (sh *SyntaxHighlightFilter) Render(ctx *htmlpipeline.Context) error {
+	doc, err := ctx.Document()
+	if err != nil {
+		return err
+	}
+
 	doc.Find("pre").Each(func(i int, s *goquery.Selection) {
 		// TODO: make this customizable
 
@@ -71,5 +77,6 @@ func (sh *SyntaxHighlightFilter) Render(ctx *htmlpipeline.Context) {
 
 		s.ReplaceWithHtml(w.String())
 	})
-	ctx.WriteDocument(doc)
+
+	return ctx.WriteDocument(doc)
 }

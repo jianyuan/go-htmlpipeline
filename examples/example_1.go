@@ -26,8 +26,12 @@ func main() {
 	)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		output := pipeline.Render(TestInput)
-		fmt.Fprintf(w, output)
+		output, err := pipeline.Render(TestInput)
+		if err == nil {
+			fmt.Fprint(w, output)
+		} else {
+			fmt.Fprintf(w, "Error: %v", err)
+		}
 	})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

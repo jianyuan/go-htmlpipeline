@@ -10,10 +10,12 @@ func New(filters ...Filter) *Pipeline {
 	}
 }
 
-func (p *Pipeline) Render(input string) string {
+func (p *Pipeline) Render(input string) (string, error) {
 	ctx := NewContext(input)
 	for _, filter := range p.filters {
-		filter.Render(ctx)
+		if err := filter.Render(ctx); err != nil {
+			return "", err
+		}
 	}
 	return ctx.HTML()
 }

@@ -1,9 +1,12 @@
 package filter
 
 import (
-	"github.com/jianyuan/go-htmlpipeline"
 	blackfriday "gopkg.in/russross/blackfriday.v2"
+
+	"github.com/jianyuan/go-htmlpipeline"
 )
+
+var _ (htmlpipeline.Filter) = (*MarkdownFilter)(nil)
 
 type MarkdownFilter struct {
 	options []blackfriday.Option
@@ -15,8 +18,13 @@ func NewMarkdownFilter(options ...blackfriday.Option) htmlpipeline.Filter {
 	}
 }
 
-func (md *MarkdownFilter) Render(ctx *htmlpipeline.Context) {
-	input := []byte(ctx.HTML())
+func (md *MarkdownFilter) Render(ctx *htmlpipeline.Context) error {
+	html, err := ctx.HTML()
+	if err != nil {
+		return err
+	}
+
+	input := []byte(html)
 	output := blackfriday.Run(input, md.options...)
-	ctx.WriteHTML(string(output))
+	return ctx.WriteHTML(string(output))
 }
